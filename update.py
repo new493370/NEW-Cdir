@@ -28,7 +28,10 @@ def fetch_prefixes(asn):
                 if ":" in prefix:
                     continue
                 try:
-                    ipaddress.ip_network(prefix, strict=False)
+                    network = ipaddress.ip_network(prefix, strict=False)
+                    first_octet = int(str(network.network_address).split('.')[0])
+                    if first_octet <= 9:
+                        continue
                     result.append(prefix)
                 except Exception:
                     pass
